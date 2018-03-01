@@ -11,7 +11,7 @@ public class RunnerMovement : MonoBehaviour {
 
     private float moveSpeed = 3f;
     private Vector3 moveDir;
-    private float jumpSpeed = 0.50f;
+    private float jumpSpeed = 0.5f;
     private float gravity = 1.0f;
     private float jumpRate = 0.5f;
     private float lastJump = 0.0f;

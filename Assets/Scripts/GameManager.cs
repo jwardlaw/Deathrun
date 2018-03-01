@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using Rewired;
 
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 
         p1 = ReInput.players.GetPlayer(0);
-
+        p2 = ReInput.players.GetPlayer(1);
     }
 
     void swapControls()
@@ -26,14 +27,24 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-	// Update is called once per frame
-	void Update () {
+    private void resetScene()
+    {
+        if(Input.GetKeyDown("r"))
+        {
+            SceneManager.LoadScene("JoshTest");
+        }
+    }
 
+    // Update is called once per frame
+    void Update () {
+
+        resetScene();
         if(Input.GetButtonDown("Jump"))
         {
             Debug.Log("Swap");
             swapControls();
         }
+        
 		
 	}
 }
