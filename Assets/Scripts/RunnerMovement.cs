@@ -8,11 +8,12 @@ public class RunnerMovement : MonoBehaviour {
 
     private Player player;
     private CharacterController cc;
+    private SpriteRenderer sr;
 
     private float moveSpeed = 3f;
     private Vector3 moveDir;
-    private float jumpSpeed = 0.5f;
-    private float gravity = 1.0f;
+    private float jumpSpeed = 1.5f;
+    private float gravity = 3.5f;
     private float jumpRate = 0.5f;
     private float lastJump = 0.0f;
 
@@ -20,7 +21,7 @@ public class RunnerMovement : MonoBehaviour {
     {
         moveDir.x = player.GetAxis("WalkHorizontal");
         // Jump
-        if (Input.GetButtonDown("Jump") && cc.isGrounded)
+        if (player.GetButtonDown("Jump") && cc.isGrounded)
         {
             if (Time.time > jumpRate + lastJump)
             {
@@ -37,6 +38,14 @@ public class RunnerMovement : MonoBehaviour {
             // Debug.Log("move");
             cc.Move(moveDir * moveSpeed * Time.deltaTime);
         }
+        if(moveDir.x < 0)
+        {
+            sr.flipX = true;
+        }
+        else if(moveDir.x > 0)
+        {
+            sr.flipX = false;
+        }
     }
 
     void processGravity()
@@ -51,6 +60,8 @@ public class RunnerMovement : MonoBehaviour {
 
         // Get the character controller
         cc = GetComponent<CharacterController>();
+
+        sr = GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
