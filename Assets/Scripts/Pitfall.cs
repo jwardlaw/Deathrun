@@ -6,7 +6,7 @@ public class Pitfall : MonoBehaviour {
 
     public bool FallFlag = false;
     public bool ReverseFlag = false;
-    public float FallSpeed = 2.0f;
+    public float FallSpeed = 3.0f;
     public SpriteRenderer label;
     private float cooldown = 2.8f;
     private float refreshTimeStamp;

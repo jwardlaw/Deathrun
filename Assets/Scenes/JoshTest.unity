@@ -1261,7 +1261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FallFlag: 0
   ReverseFlag: 0
-  FallSpeed: 8
+  FallSpeed: 12
   label: {fileID: 208168674}
 --- !u!1 &1241468685
 GameObject:

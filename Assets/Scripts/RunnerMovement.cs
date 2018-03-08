@@ -11,6 +11,7 @@ public class RunnerMovement : MonoBehaviour {
     private SpriteRenderer sr;
 
     private float moveSpeed = 3f;
+    private float fallSpeed = -4f;
     private Vector3 moveDir;
     private float jumpSpeed = 1.5f;
     private float gravity = 3.5f;
@@ -50,8 +51,15 @@ public class RunnerMovement : MonoBehaviour {
 
     void processGravity()
     {
-        moveDir.y -= gravity * Time.deltaTime;
-        cc.Move(moveDir * Time.deltaTime);
+        if(moveDir.y >= fallSpeed && !cc.isGrounded)
+        {
+            moveDir.y -= gravity * Time.deltaTime;
+            cc.Move(moveDir * Time.deltaTime);
+        }
+        else if(cc.isGrounded)
+        {
+            moveDir.y = 0;
+        }
     }
 
 	// Use this for initialization
