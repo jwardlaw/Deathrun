@@ -55,6 +55,5 @@ public class Pitfall : MonoBehaviour {
             label.enabled = true;
         }
         processGravity();
-		
 	}
 }

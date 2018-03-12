@@ -7,6 +7,8 @@ public class Trapper : MonoBehaviour {
     private int playerId = 1;
     private Player player;
     public GameObject trap1;
+    public GameObject trap2;
+    public GameObject trap3;
 
 
     private void Awake()
@@ -21,6 +23,18 @@ public class Trapper : MonoBehaviour {
         {
             Debug.Log("TrapA");
             trap1.GetComponent<Pitfall>().setFallTrue();
+        }
+
+        if (player.GetButtonDown("TrapB") /* && player.GetAxisRaw("TrapB") != 0 */)
+        {
+            Debug.Log("TrapB");
+            trap2.GetComponent<Spike>().setRaiseTrue();
+        }
+
+        if (player.GetButtonDown("TrapX") /* && player.GetAxisRaw("TrapB") != 0 */)
+        {
+            Debug.Log("TrapX");
+            trap3.GetComponent<Weight>().setFallTrue();
         }
     }
 

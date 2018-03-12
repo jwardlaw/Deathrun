@@ -51,7 +51,7 @@ public class RunnerMovement : MonoBehaviour {
 
     void processGravity()
     {
-        if(moveDir.y >= fallSpeed && !cc.isGrounded)
+        if(/*moveDir.y >= fallSpeed && */!cc.isGrounded)
         {
             moveDir.y -= gravity * Time.deltaTime;
             cc.Move(moveDir * Time.deltaTime);
@@ -60,6 +60,16 @@ public class RunnerMovement : MonoBehaviour {
         {
             moveDir.y = 0;
         }
+    }
+
+    void fallDeath()
+    {
+        if (transform.position.y < -3.3)
+        {
+            Destroy(gameObject);
+            Debug.Log("fall");
+        }
+            
     }
 
 	// Use this for initialization
@@ -77,5 +87,6 @@ public class RunnerMovement : MonoBehaviour {
         getInput();
         processInput();
         processGravity();
+        fallDeath();
     }
 }
