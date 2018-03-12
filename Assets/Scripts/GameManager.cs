@@ -17,20 +17,26 @@ public class GameManager : MonoBehaviour {
     public GameObject goalLine;
     public Text trapWin;
     public Text runWin;
+    public Transform canvas;
 
 
     private bool trapperWin = false;
     private bool runnerWin = false;
 
-
-    
-
-	// Use this for initialization
-	void Start () {
-
+    private void Awake()
+    {
         p1 = ReInput.players.GetPlayer(0);
         p2 = ReInput.players.GetPlayer(1);
-        cam = (Camera) FindObjectOfType(typeof(Camera));
+        cam = (Camera)FindObjectOfType(typeof(Camera));
+    }
+
+    private void Start()
+    {
+        canvas.gameObject.SetActive(false);
+        cam.panCam = true;
+        Time.timeScale = 1;
+        thePlayer.GetComponent<RunnerMovement>().canInput = true;
+        theTrapper.GetComponent<Trapper>().canInput = true;
     }
 
     void swapControls()
@@ -41,12 +47,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void resetScene()
+    public void resetScene()
     {
-        if(Input.GetKeyDown("r"))
-        {
-            SceneManager.LoadScene("JoshTest");
-        }
+        SceneManager.LoadScene("JoshTest");
     }
 
     private void gameOver()
@@ -75,10 +78,53 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
+    public void exitGame()
+    {
+        Application.Quit();
+    }
 
-        resetScene();
+    public void resume()
+    {
+        canvas.gameObject.SetActive(false);
+        cam.panCam = true;
+        Time.timeScale = 1;
+        thePlayer.GetComponent<RunnerMovement>().canInput = true;
+        theTrapper.GetComponent<Trapper>().canInput = true;
+    }
+
+    public void loadMenu()
+    {
+       
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
+    }
+    
+    // Update is called once per frame
+    void Update() {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (canvas.gameObject.activeInHierarchy == false)
+            {
+                canvas.gameObject.SetActive(true);
+                cam.panCam = false;
+                thePlayer.GetComponent<RunnerMovement>().canInput = false;
+                // thePlayer.GetComponent<RunnerMovement>().stopMove();
+                theTrapper.GetComponent<Trapper>().canInput = false;
+                Time.timeScale = 0;
+            }
+
+            else
+            {
+                canvas.gameObject.SetActive(false);
+                cam.panCam = true;
+                Time.timeScale = 1;
+                thePlayer.GetComponent<RunnerMovement>().canInput = true;
+                theTrapper.GetComponent<Trapper>().canInput = true;
+            }
+        }
+      
         gameOver();
         /*
         if(Input.GetButtonDown("Jump"))

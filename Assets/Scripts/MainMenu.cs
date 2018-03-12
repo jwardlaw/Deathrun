@@ -10,6 +10,11 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene("JoshTest");
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 	// Use this for initialization
 	void Start () {
 		
