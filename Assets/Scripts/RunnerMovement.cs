@@ -9,6 +9,7 @@ public class RunnerMovement : MonoBehaviour {
     private Player player;
     private CharacterController cc;
     private SpriteRenderer sr;
+    private AudioSource aus;
 
     private float moveSpeed = 3f;
     private float fallSpeed = -4f;
@@ -17,18 +18,36 @@ public class RunnerMovement : MonoBehaviour {
     private float gravity = 3.5f;
     private float jumpRate = 0.5f;
     private float lastJump = 0.0f;
+    private bool isJumping = false;
+    private bool isWalking = false;
+    public bool isDead = false;
+
+    // sounds
+    public AudioClip walk;
+    public AudioClip jump;
 
     void getInput()
     {
         moveDir.x = player.GetAxis("WalkHorizontal");
+        if (moveDir.x != 0 && cc.isGrounded)
+            isWalking = true;
+        if (moveDir.x == 0 && cc.isGrounded)
+            isWalking = false;
+
         // Jump
         if (player.GetButtonDown("Jump") && cc.isGrounded)
         {
             if (Time.time > jumpRate + lastJump)
             {
                 moveDir.y = jumpSpeed;
+                isJumping = true;
+                isWalking = false;
             }
             lastJump = Time.time;
+        }
+        else
+        {
+            isJumping = false;
         }
     }
 
@@ -66,10 +85,16 @@ public class RunnerMovement : MonoBehaviour {
     {
         if (transform.position.y < -3.3)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            isDead = true;
+            gameObject.SetActive(false);
             Debug.Log("fall");
-        }
-            
+        }   
+    }
+
+    void setDead()
+    {
+        isDead = true;
     }
 
 	// Use this for initialization
@@ -80,13 +105,79 @@ public class RunnerMovement : MonoBehaviour {
         cc = GetComponent<CharacterController>();
 
         sr = GetComponent<SpriteRenderer>();
+
+        aus = GetComponent<AudioSource>();
     }
-	
+
+    void processSounds()
+    {
+        if(isWalking)
+        {
+            if(aus.clip != walk)
+            {
+                aus.Stop();
+                aus.clip = walk;
+            }
+
+            if(! aus.isPlaying)
+            {
+                aus.Play();
+            }
+        }
+        else if(isJumping)
+        {
+            if(aus.clip != jump)
+            {
+                aus.Stop();
+                aus.clip = jump;
+            }
+
+            if(!aus.isPlaying)
+            {
+                aus.Play();
+            }
+        }
+        else
+        {
+            aus.Stop();
+        }
+
+        /*
+        // walk
+        if (cc.isGrounded && player.GetAxis("WalkHorizontal") != 0)
+        {
+            GetComponent<AudioSource>().UnPause();
+        }
+        if (player.GetButtonDown("Jump") && cc.isGrounded)
+        {
+            GetComponent<AudioSource>().clip = jump;
+            GetComponent<AudioSource>().UnPause();
+        }
+        else
+        {
+            GetComponent<AudioSource>().Pause();
+        }
+
+        /*
+        // Jump
+        if (player.GetButtonDown("Jump") && cc.isGrounded)
+        {
+            GetComponent<AudioSource>().clip = jump;
+            GetComponent<AudioSource>().UnPause();
+        }
+        if (cc.isGrounded)
+        {
+            GetComponent<AudioSource>().clip = walk;
+        }
+        */
+    }
+
 	// Update is called once per frame
 	void Update () {
         getInput();
         processInput();
         processGravity();
+        processSounds();
         fallDeath();
     }
 }

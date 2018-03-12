@@ -10,6 +10,14 @@ public class GameManager : MonoBehaviour {
     public Player p2;
     public Player p3;
     public Player p4;
+    private Camera cam;
+    public GameObject thePlayer;
+    public GameObject goalLine;
+
+    private bool trapperWin = false;
+    private bool runnerWin = false;
+
+
     
 
 	// Use this for initialization
@@ -17,6 +25,7 @@ public class GameManager : MonoBehaviour {
 
         p1 = ReInput.players.GetPlayer(0);
         p2 = ReInput.players.GetPlayer(1);
+        cam = (Camera) FindObjectOfType(typeof(Camera));
     }
 
     void swapControls()
@@ -35,16 +44,32 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void gameOver()
+    {
+        
+        if (thePlayer.GetComponent<RunnerMovement>().isDead)
+            trapperWin = true;
+
+        if (goalLine.GetComponent<Goal>().crossed)
+            runnerWin = true;
+            
+        if(trapperWin || runnerWin)
+        {
+            cam.panCam = false;
+        }
+    }
+
     // Update is called once per frame
     void Update () {
 
         resetScene();
+        gameOver();
+        /*
         if(Input.GetButtonDown("Jump"))
         {
             Debug.Log("Swap");
             swapControls();
         }
-        
-		
+        */	
 	}
 }

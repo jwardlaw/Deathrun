@@ -5,6 +5,7 @@ using UnityEngine;
 public class Camera : MonoBehaviour {
 
     public float panSpeed = 0.5f;
+    public bool panCam = true;
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +14,7 @@ public class Camera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(Vector3.right * Time.deltaTime * panSpeed);
+        if(panCam)
+            transform.Translate(Vector3.right * Time.deltaTime * panSpeed);
 	}
 }

@@ -11,7 +11,13 @@ public class Weight : MonoBehaviour {
     private float refreshTimeStamp;
     public Collider myCol;
     public Rigidbody rb;
-    
+    private AudioSource aus;
+
+    private void Awake()
+    {
+        aus = GetComponent<AudioSource>();
+    }
+
     void processGravity()
     {
         if (FallFlag)
@@ -26,7 +32,12 @@ public class Weight : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if(other.transform.tag == "Player" && rb.velocity != new Vector3(0,0,0))
-            Destroy(other.gameObject);
+        {
+            other.gameObject.SendMessage("setDead");
+            other.gameObject.SetActive(false);
+            //            Destroy(other.gameObject);
+        }
+
 
         if (other.transform.tag == "Floor")
             myCol.isTrigger = false;
@@ -40,6 +51,7 @@ public class Weight : MonoBehaviour {
             refreshTimeStamp = Time.time + cooldown;
             FallFlag = true;
             label.enabled = false;
+            aus.Play();
         }
     }
 

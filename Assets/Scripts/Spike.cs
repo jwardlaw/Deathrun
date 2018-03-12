@@ -11,17 +11,24 @@ public class Spike : MonoBehaviour {
     private float cooldown = 2.8f;
     private float refreshTimeStamp;
     private Vector3 startPos;
+    private AudioSource aus;
 
     // Use this for initialization
     void Start()
     {
         startPos = transform.position;
+        aus = GetComponent<AudioSource>();
     }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.transform.tag == "Player")
-            Destroy(other.gameObject);
+        {
+            other.gameObject.SendMessage("setDead");
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
+        }
+ 
 
             
     }
@@ -52,6 +59,7 @@ public class Spike : MonoBehaviour {
         {
             refreshTimeStamp = Time.time + cooldown;
             RaiseFlag = true;
+            aus.Play();
         }
     }
     // Update is called once per frame

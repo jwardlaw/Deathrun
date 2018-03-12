@@ -11,10 +11,12 @@ public class Pitfall : MonoBehaviour {
     private float cooldown = 2.8f;
     private float refreshTimeStamp;
     private Vector3 startPos;
+    private AudioSource aus;
 
     // Use this for initialization
     void Start () {
         startPos = transform.position;
+        aus = GetComponent<AudioSource>();
 	}
 
     void processGravity()
@@ -45,6 +47,7 @@ public class Pitfall : MonoBehaviour {
         {
             refreshTimeStamp = Time.time + cooldown;
             FallFlag = true;
+            aus.Play();
         }
     }
 
