@@ -21,6 +21,7 @@ public class RunnerMovement : MonoBehaviour {
     private bool isJumping = false;
     private bool isWalking = false;
     public bool isDead = false;
+    public bool canInput = true;
 
     // sounds
     public AudioClip walk;
@@ -49,6 +50,12 @@ public class RunnerMovement : MonoBehaviour {
         {
             isJumping = false;
         }
+    }
+
+    public void stopMove()
+    {
+        moveDir.x = 0;
+        aus.Stop();
     }
 
     void processInput()
@@ -174,7 +181,8 @@ public class RunnerMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        getInput();
+        if(canInput)
+            getInput();
         processInput();
         processGravity();
         processSounds();

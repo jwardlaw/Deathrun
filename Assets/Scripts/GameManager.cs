@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Rewired;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,7 +13,11 @@ public class GameManager : MonoBehaviour {
     public Player p4;
     private Camera cam;
     public GameObject thePlayer;
+    public GameObject theTrapper;
     public GameObject goalLine;
+    public Text trapWin;
+    public Text runWin;
+
 
     private bool trapperWin = false;
     private bool runnerWin = false;
@@ -48,14 +53,25 @@ public class GameManager : MonoBehaviour {
     {
         
         if (thePlayer.GetComponent<RunnerMovement>().isDead)
+        {
             trapperWin = true;
+            trapWin.gameObject.SetActive(true);
+        }
+            
 
         if (goalLine.GetComponent<Goal>().crossed)
+        {
             runnerWin = true;
+            runWin.gameObject.SetActive(true);
+        }
+
             
         if(trapperWin || runnerWin)
         {
             cam.panCam = false;
+            thePlayer.GetComponent<RunnerMovement>().canInput = false;
+            thePlayer.GetComponent<RunnerMovement>().stopMove();
+            theTrapper.GetComponent<Trapper>().canInput = false;
         }
     }
 

@@ -9,6 +9,7 @@ public class Trapper : MonoBehaviour {
     public GameObject trap1;
     public GameObject trap2;
     public GameObject trap3;
+    public bool canInput = true;
 
 
     private void Awake()
@@ -45,6 +46,7 @@ public class Trapper : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        getInput();
+        if(canInput)
+            getInput();
 	}
 }
