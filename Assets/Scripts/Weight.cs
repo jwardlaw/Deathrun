@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weight : MonoBehaviour {
+public class Weight : Trap {
 
     public bool FallFlag = false;
     public float FallSpeed = 3.0f;
-    public SpriteRenderer label;
     private float cooldown = 2.8f;
     private float refreshTimeStamp;
     public Collider myCol;
@@ -44,7 +43,7 @@ public class Weight : MonoBehaviour {
     }
 
 
-    public void setFallTrue()
+    public override void Trigger()
     {
         if (refreshTimeStamp <= Time.time)
         {

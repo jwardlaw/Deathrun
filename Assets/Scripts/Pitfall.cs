@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pitfall : MonoBehaviour {
+public class Pitfall : Trap {
 
     public bool FallFlag = false;
     public bool ReverseFlag = false;
     public float FallSpeed = 3.0f;
-    public SpriteRenderer label;
     private float cooldown = 2.8f;
     private float refreshTimeStamp;
     private Vector3 startPos;
@@ -41,7 +40,7 @@ public class Pitfall : MonoBehaviour {
         }
     }
     
-    public void setFallTrue()
+    public override void Trigger()
     {
         if(refreshTimeStamp <= Time.time)
         {

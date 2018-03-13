@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spike : MonoBehaviour {
+public class Spike : Trap {
 
     public bool RaiseFlag = false;
     public bool ReverseFlag = false;
     public float RaiseSpeed = 1.0f;
-    public SpriteRenderer label;
     private float cooldown = 2.8f;
     private float refreshTimeStamp;
     private Vector3 startPos;
@@ -33,7 +32,7 @@ public class Spike : MonoBehaviour {
             
     }
 
-    void triggerTrap()
+    public override void Trigger()
     {
         label.enabled = false;
         transform.Translate(Vector3.up * 0.5f); //Vector3.up * RaiseSpeed * Time.deltaTime);
@@ -72,7 +71,7 @@ public class Spike : MonoBehaviour {
         
         if(RaiseFlag == true)
         {
-            triggerTrap();
+            Trigger();
         }
 
         resetPosition();
